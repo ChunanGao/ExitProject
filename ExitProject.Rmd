@@ -10,7 +10,7 @@ library(tidyverse)
 ```
 
 
-```{r}
+```{r, message=FALSE}
 Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
 head(Des)
 ```
@@ -36,7 +36,7 @@ head(AS_tidy)
 ```
 
 
-```{r, , message=FALSE}
+```{r, message=FALSE}
 OT <- read_csv("~/R/ExitProject/Rowdata/OutdoorPlay_Time.csv")
 head(OT)
 ```
@@ -50,10 +50,12 @@ head(OT_tidy)
 
 
 
-```{r}
+```{r, warning = FALSE, message=FALSE}
 #install.packages("maps")
 library(maps) 
+```
 
+```{r}
 Children <- Number_of_Des %>%
   left_join(AS_tidy) %>% 
   left_join(OT_tidy) %>% 
@@ -63,7 +65,7 @@ Children <- Number_of_Des %>%
 
 head(Children)
 ```
-```{r}
+```{r, message=FALSE}
 Children %>% 
   ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
   geom_point(mapping = aes(color = neighborhood), size = 3) +
@@ -73,7 +75,7 @@ Children %>%
 ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
 
 ```
-```{r}
+```{r, message=FALSE}
 Children %>% 
   filter(!is.na(Longest_dis)) %>% 
   ggplot(mapping = aes(x = AS_area, y = Longest_dis)) + 
@@ -85,7 +87,7 @@ ggsave(file = "~/R/ExitProject/Figures/ASvsHDD.png" )
 ```
 
 
-```{r}
+```{r, message=FALSE}
 Children %>% 
   filter(!is.na(Outdoor_time)) %>% 
   ggplot(mapping = aes(x = Outdoor_time, y = AS_area, na.rm = TRUE)) + 
@@ -95,12 +97,12 @@ Children %>%
 
 ggsave(file = "~/R/ExitProject/Figures/OTvsND.png" )
 ```
-```{r}
+```{r, message=FALSE}
 Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
 head(Des)
 ```
 
-```{r}
+```{r, message=FALSE}
 Pop_Des <- Des %>% 
   mutate(timescount = rep(1, length(StudentID))) %>% 
   transform( neighborhood = substr(StudentID, 1, 2), ID = substr(StudentID, 3, 5)) %>% 

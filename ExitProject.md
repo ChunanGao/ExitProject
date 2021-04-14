@@ -7,29 +7,8 @@ Chunan Gao
 library(tidyverse)
 ```
 
-    ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-
-    ## v ggplot2 3.3.3     v purrr   0.3.4
-    ## v tibble  3.0.6     v dplyr   1.0.3
-    ## v tidyr   1.1.2     v stringr 1.4.0
-    ## v readr   1.4.0     v forcats 0.5.1
-
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-    ## x dplyr::filter() masks stats::filter()
-    ## x dplyr::lag()    masks stats::lag()
-
 ``` r
 Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
-```
-
-    ## 
-    ## -- Column specification --------------------------------------------------------
-    ## cols(
-    ##   StudentID = col_character(),
-    ##   Destination_Type = col_character()
-    ## )
-
-``` r
 head(Des)
 ```
 
@@ -63,18 +42,6 @@ head(Number_of_Des)
 
 ``` r
 AS <- read_csv("~/R/ExitProject/Rowdata/Activity_Space.csv")
-```
-
-    ## 
-    ## -- Column specification --------------------------------------------------------
-    ## cols(
-    ##   StudentID = col_character(),
-    ##   `Shape_Area(m^2)` = col_double(),
-    ##   `HtoD_Longest_Distance(m)` = col_double(),
-    ##   ActivitySpace_Shape = col_character()
-    ## )
-
-``` r
 head(AS)
 ```
 
@@ -109,16 +76,6 @@ head(AS_tidy)
 
 ``` r
 OT <- read_csv("~/R/ExitProject/Rowdata/OutdoorPlay_Time.csv")
-```
-
-    ## 
-    ## -- Column specification --------------------------------------------------------
-    ## cols(
-    ##   StudentID = col_character(),
-    ##   `Total Outdoor Time per Week in SSF` = col_double()
-    ## )
-
-``` r
 head(OT)
 ```
 
@@ -154,15 +111,6 @@ head(OT_tidy)
 library(maps) 
 ```
 
-    ## Warning: package 'maps' was built under R version 4.0.5
-
-    ## 
-    ## Attaching package: 'maps'
-
-    ## The following object is masked from 'package:purrr':
-    ## 
-    ##     map
-
 ``` r
 Children <- Number_of_Des %>%
   left_join(AS_tidy) %>% 
@@ -173,7 +121,6 @@ Children <- Number_of_Des %>%
 ```
 
     ## Joining, by = "StudentID"
-
     ## Joining, by = "StudentID"
 
 ``` r
@@ -203,16 +150,11 @@ Children %>%
   labs(title = "Children's Activity Space vs. Neighborhood Destinations")
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-![](ExitProject_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](ExitProject_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
 ```
-
-    ## Saving 7 x 5 in image
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 
 ``` r
 Children %>% 
@@ -223,16 +165,11 @@ Children %>%
   labs(title = "Children's Activity Space vs. Longest Home-to-destination Distances")
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-![](ExitProject_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](ExitProject_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
 
 ``` r
 ggsave(file = "~/R/ExitProject/Figures/ASvsHDD.png" )
 ```
-
-    ## Saving 7 x 5 in image
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
 
 ``` r
 Children %>% 
@@ -243,29 +180,14 @@ Children %>%
   labs(title = "Children's Outdoor Play time vs. Neighborhood Destinations")
 ```
 
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
-![](ExitProject_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](ExitProject_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
 ``` r
 ggsave(file = "~/R/ExitProject/Figures/OTvsND.png" )
 ```
 
-    ## Saving 7 x 5 in image
-    ## `geom_smooth()` using method = 'loess' and formula 'y ~ x'
-
 ``` r
 Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
-```
-
-    ## 
-    ## -- Column specification --------------------------------------------------------
-    ## cols(
-    ##   StudentID = col_character(),
-    ##   Destination_Type = col_character()
-    ## )
-
-``` r
 head(Des)
 ```
 
@@ -287,11 +209,7 @@ Pop_Des <- Des %>%
   group_by(Destination_Type, neighborhood) %>% 
   summarise(typecount = sum(timescount)) %>% 
   pivot_wider(names_from = neighborhood, values_from = typecount)
-```
 
-    ## `summarise()` has grouped output by 'Destination_Type'. You can override using the `.groups` argument.
-
-``` r
 Pop_Des
 ```
 
