@@ -65,16 +65,7 @@ Children <- Number_of_Des %>%
 
 head(Children)
 ```
-```{r, message=FALSE}
-Children %>% 
-  ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
-  geom_point(mapping = aes(color = neighborhood), size = 3) +
-  geom_smooth()+
-  labs(title = "Children's Activity Space vs. Neighborhood Destinations")
 
-ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
-
-```
 ```{r, message=FALSE}
 Children %>% 
   filter(!is.na(Longest_dis)) %>% 
@@ -85,6 +76,16 @@ Children %>%
 
 ggsave(file = "~/R/ExitProject/Figures/ASvsHDD.png" )
 ```
+```{r, message=FALSE}
+Children %>% 
+  ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
+  geom_point(mapping = aes(color = neighborhood), size = 3) +
+  geom_smooth()+
+  labs(title = "Children's Activity Space vs. Neighborhood Destinations")
+
+ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
+
+```
 
 
 ```{r, message=FALSE}
@@ -93,7 +94,7 @@ Children %>%
   ggplot(mapping = aes(x = Outdoor_time, y = AS_area, na.rm = TRUE)) + 
   geom_point(mapping = aes(color = neighborhood), size = 3) +
   geom_smooth()+
-  labs(title = "Children's Outdoor Play time vs. Neighborhood Destinations")
+  labs(title = "Children's Outdoor Play time vs. Activity Space")
 
 ggsave(file = "~/R/ExitProject/Figures/OTvsND.png" )
 ```

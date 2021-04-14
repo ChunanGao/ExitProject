@@ -144,20 +144,6 @@ head(Children)
 
 ``` r
 Children %>% 
-  ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
-  geom_point(mapping = aes(color = neighborhood), size = 3) +
-  geom_smooth()+
-  labs(title = "Children's Activity Space vs. Neighborhood Destinations")
-```
-
-![](ExitProject_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
-
-``` r
-ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
-```
-
-``` r
-Children %>% 
   filter(!is.na(Longest_dis)) %>% 
   ggplot(mapping = aes(x = AS_area, y = Longest_dis)) + 
   geom_point(mapping = aes(color = ActivitySpace_Shape, shape = neighborhood), size = 3) +
@@ -165,10 +151,24 @@ Children %>%
   labs(title = "Children's Activity Space vs. Longest Home-to-destination Distances")
 ```
 
-![](ExitProject_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+![](ExitProject_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 ``` r
 ggsave(file = "~/R/ExitProject/Figures/ASvsHDD.png" )
+```
+
+``` r
+Children %>% 
+  ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
+  geom_point(mapping = aes(color = neighborhood), size = 3) +
+  geom_smooth()+
+  labs(title = "Children's Activity Space vs. Neighborhood Destinations")
+```
+
+![](ExitProject_files/figure-gfm/unnamed-chunk-11-1.png)<!-- -->
+
+``` r
+ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
 ```
 
 ``` r
@@ -177,7 +177,7 @@ Children %>%
   ggplot(mapping = aes(x = Outdoor_time, y = AS_area, na.rm = TRUE)) + 
   geom_point(mapping = aes(color = neighborhood), size = 3) +
   geom_smooth()+
-  labs(title = "Children's Outdoor Play time vs. Neighborhood Destinations")
+  labs(title = "Children's Outdoor Play time vs. Activity Space")
 ```
 
 ![](ExitProject_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
