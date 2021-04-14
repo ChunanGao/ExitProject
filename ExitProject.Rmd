@@ -5,7 +5,7 @@ date: "4/13/2021"
 output: github_document
 ---
 
-```{r}
+```{r, message=FALSE}
 library(tidyverse)
 ```
 
@@ -21,7 +21,7 @@ Number_of_Des <- Des %>%
   summarise(total_des = sum(timescount))
 head(Number_of_Des)
 ```
-```{r}
+```{r, message=FALSE}
 AS <- read_csv("~/R/ExitProject/Rowdata/Activity_Space.csv")
 head(AS)
 ```
@@ -36,10 +36,12 @@ head(AS_tidy)
 ```
 
 
-```{r}
+```{r, , message=FALSE}
 OT <- read_csv("~/R/ExitProject/Rowdata/OutdoorPlay_Time.csv")
 head(OT)
+```
 
+```{r}
 OT_tidy <- OT %>% 
   rename("Outdoor_time" = "Total Outdoor Time per Week in SSF")
 
