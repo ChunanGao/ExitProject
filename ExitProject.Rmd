@@ -2,7 +2,7 @@
 title: "Exit_project"
 author: "Chunan Gao"
 date: "4/13/2021"
-output: html_document
+output: github_document
 ---
 
 ```{r}
