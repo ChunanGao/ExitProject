@@ -1,0 +1,117 @@
+---
+title: "Exit_project"
+author: "Chunan Gao"
+date: "4/13/2021"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+```
+
+
+```{r}
+Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
+head(Des)
+```
+```{r}
+Number_of_Des <- Des %>% 
+  mutate(timescount = rep(1, length(StudentID))) %>% 
+  group_by(StudentID) %>% 
+  summarise(total_des = sum(timescount))
+head(Number_of_Des)
+```
+```{r}
+AS <- read_csv("~/R/ExitProject/Rowdata/Activity_Space.csv")
+head(AS)
+```
+
+```{r}
+AS_tidy <- AS %>% 
+  rename("AS_area" = "Shape_Area(m^2)", "Longest_dis" = "HtoD_Longest_Distance(m)") %>% 
+  mutate(AS_area = AS_area / 1000000) %>% 
+  mutate(Longest_dis = Longest_dis / 1000) 
+  
+head(AS_tidy)
+```
+
+
+```{r}
+OT <- read_csv("~/R/ExitProject/Rowdata/OutdoorPlay_Time.csv")
+head(OT)
+
+OT_tidy <- OT %>% 
+  rename("Outdoor_time" = "Total Outdoor Time per Week in SSF")
+
+head(OT_tidy)
+```
+
+
+
+```{r}
+#install.packages("maps")
+library(maps) 
+
+Children <- Number_of_Des %>%
+  left_join(AS_tidy) %>% 
+  left_join(OT_tidy) %>% 
+  transform( neighborhood = substr(StudentID, 1, 2), ID = substr(StudentID, 3, 5)) %>% 
+  mutate(neighborhood = ifelse(neighborhood == "RL", "Rural", "Urban")) %>% 
+  write_csv(file = "~/R/ExitProject/Children_tidy.csv" )
+
+head(Children)
+```
+```{r}
+Children %>% 
+  ggplot(mapping = aes(x = AS_area, y = total_des, na.rm = TRUE)) + 
+  geom_point(mapping = aes(color = neighborhood), size = 3) +
+  geom_smooth()+
+  labs(title = "Children's Activity Space vs. Neighborhood Destinations")
+
+ggsave(file = "~/R/ExitProject/Figures/ASvsND.png" )
+
+```
+```{r}
+Children %>% 
+  filter(!is.na(Longest_dis)) %>% 
+  ggplot(mapping = aes(x = AS_area, y = Longest_dis)) + 
+  geom_point(mapping = aes(color = ActivitySpace_Shape, shape = neighborhood), size = 3) +
+  geom_smooth()+
+  labs(title = "Children's Activity Space vs. Longest Home-to-destination Distances")
+
+ggsave(file = "~/R/ExitProject/Figures/ASvsHDD.png" )
+```
+
+
+```{r}
+Children %>% 
+  filter(!is.na(Outdoor_time)) %>% 
+  ggplot(mapping = aes(x = Outdoor_time, y = AS_area, na.rm = TRUE)) + 
+  geom_point(mapping = aes(color = neighborhood), size = 3) +
+  geom_smooth()+
+  labs(title = "Children's Outdoor Play time vs. Neighborhood Destinations")
+
+ggsave(file = "~/R/ExitProject/Figures/OTvsND.png" )
+```
+```{r}
+Des <- read_csv("~/R/ExitProject/Rowdata/Neighborhood_Destinations.csv")
+head(Des)
+```
+
+```{r}
+Pop_Des <- Des %>% 
+  mutate(timescount = rep(1, length(StudentID))) %>% 
+  transform( neighborhood = substr(StudentID, 1, 2), ID = substr(StudentID, 3, 5)) %>% 
+  mutate(neighborhood = ifelse(neighborhood == "RL", "Rural", "Urban")) %>% 
+  group_by(Destination_Type, neighborhood) %>% 
+  summarise(typecount = sum(timescount)) %>% 
+  pivot_wider(names_from = neighborhood, values_from = typecount)
+
+Pop_Des
+```
+
+
+
+
+
+
